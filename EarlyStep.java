@@ -81,9 +81,9 @@ public class EarlyStep{
 
   public static void main (String[] args){
    EarlyStep test = new EarlyStep();
-   int[] arr = new int[]{ 1,-1,0,2,3,5 };
+  
 
-System.out.println(test.jump(arr, 4));
+
 
     
     
