@@ -7,7 +7,7 @@ public class EarlyStep{
    LinkedList<Step> toVisit = new LinkedList<Step>();
    LinkedList<Step> visited = new LinkedList<Step>();
    LinkedList<Step> solution = new LinkedList<Step>();
-
+   ArrayList<Step> testing = new ArrayList<Step>();
    Step initial= new Step(0,-1,-1);
    if ((A.length +1 )== D){
      return 0;
