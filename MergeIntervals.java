@@ -7,39 +7,52 @@
  *     Interval(int s, int e) { start = s; end = e; }
  * }
  */
- import java.util.*;
+import java.util.*;
 public class Solution {
     public List<Interval> merge(List<Interval> intervals) {
-        List<Interval> resultlist = new ArrayList<Interval>();
-         System.out.println("Test");
-        List<Interval> intervallist = new ArrayList<Interval>(intervals);
-        if (intervallist.isEmpty()){
+        if (intervals.isEmpty()){
+            List<Interval> resultlist = new ArrayList<Interval>();
             return resultlist;
         }
         
-        Collections.sort(intervallist,IntervalStartOrder);
-         System.out.println((intervallist.get(0)).start + "");
-         resultlist.add(intervallist.get(0));
-        int count = 1;
-        
-        while (count < intervallist.size()){
-            Interval current = intervallist.get(count);
-            int index = resultlist.size()-1;
-            Interval lastinput = resultlist.get(index);
+        Collections.sort(intervals,IntervalStartOrder);
+        ListIterator<Interval> it = intervals.listIterator();
+        Interval lastinput = it.next();
+        while (it.hasNext()){
+            Interval current = it.next();
             if (current.start <= lastinput.end){
-                int endrange = Math.max(current.end, lastinput.end);
-                resultlist.set(index, new Interval(lastinput.start, endrange));
-                }
-            else{
-                resultlist.add(current);
+                int endrange = Math.max(current.end,lastinput.end);
+                lastinput.end = endrange;
+                it.remove();
             }
-            count++;
+            else{
+                lastinput = current;
+            }
+            
         }
-        System.out.println((resultlist.get(0)).start + "");
-        
-        System.out.println("Test");
-        return resultlist;
+
+        return intervals;
     }
+    /*
+    public List<Interval> merge(List<Interval> intervals) {
+    int N = intervals.size();
+    Collections.sort(intervals, new Comparator<Interval>(){
+        public int compare(Interval i, Interval j){
+                return i.end - j.end;
+        }
+    });
+    for(int i = N-1; i>0;i--){
+        Interval inter1 = intervals.get(i-1);
+        Interval inter2 = intervals.get(i);
+        if(inter1.end >= inter2.start){
+            inter1.start = Math.min(inter1.start, inter2.start);
+            inter1.end = inter2.end; 
+            intervals.remove(i);
+        }
+    }
+    return intervals;
+}
+*/
     final Comparator<Interval> IntervalStartOrder = new Comparator<Interval>() {
             public int compare(Interval e1, Interval e2) {
                 return e1.start - e2.start;
